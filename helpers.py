@@ -80,7 +80,7 @@ def findOrientation(gray):
         _type_: _description_
     """
     MIN_MATCH_COUNT = 8
-    template_path = "C:\\Users\\USER\\Documents\\Grad_project\\Authentication\\github_example\\ID-Card-Detection\\sift_template.jpg"
+    template_path = "https://github.com/sherifalafifioo1/Last_OCR/blob/main/sift_template.jpg"
     img1 = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)  # queryImage
     # Initiate SIFT detector
     sift = cv2.SIFT_create()
