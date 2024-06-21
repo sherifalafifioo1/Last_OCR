@@ -1,0 +1,7 @@
+gunicorn
+flask
+requests
+pytesseract
+opencv-python
+numpy
+tf-keras
