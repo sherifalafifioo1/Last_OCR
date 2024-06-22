@@ -61,13 +61,13 @@ def predict_image():
                 text_bin = preproccess_OCR(text_img)
                 id_str = OCR_pytesseract(text_bin).replace(" ","").replace("\n","").rstrip()
                 if len(id_str) != 14:
-                    continue
-                National_ID = int(id_str)
-                return(National_ID)
-        else:
-                    print("No contours")
-    else:
-                print("No ID Card Found / No contours")
+                          continue
+                      National_ID = int(id_str)
+                      return(National_ID)
+              else:
+                          print("No contours")
+          else:
+                      print("No ID Card Found / No contours")
     try:
         # Check if images are present and valid
         if 'image1' not in request.files or 'image2' not in request.files:
