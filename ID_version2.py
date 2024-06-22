@@ -53,7 +53,7 @@ def predict_image():
             contour_bbox, largest_contour = findLargestContour(edges)
             if contour_bbox is not None:
 
-                cropped_img = output_img(img, largest_contour)
+                cropped_img = output_img(img_path, largest_contour)
                 cropped_gray = img_to_gray(cropped_img)
 
                 selections, bboxes = detect_text_regions(cropped_gray)
