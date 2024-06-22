@@ -38,7 +38,7 @@ def predict_image():
 
         # If matches found, apply orientation
         if M is not None:
-            gray, img, M = applyOrientation(gray, img, M)
+            gray, img_path, M = applyOrientation(gray, img_path, M)
 
             # Blur gray for smoothing the image for edge detection
             gray = blur_img(gray)
