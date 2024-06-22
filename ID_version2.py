@@ -61,8 +61,8 @@ def predict_image():
                     id_str = OCR_pytesseract(text_bin).replace(" ", "").replace("\n", "").rstrip()
                     if len(id_str) != 14:
                         continue
-                    National_ID = int(id_str)
-                    print("gooood")
+                    National_ID = id_str
+                    printf("gooood")
                     return (National_ID)
             else:
                 print("No contours")
