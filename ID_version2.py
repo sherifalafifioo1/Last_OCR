@@ -62,7 +62,7 @@ def predict_image():
                     if len(id_str) != 14:
                         continue
                     National_ID = id_str
-                    printf("gooood")
+                   
                     return (National_ID)
             else:
                 print("No contours")
