@@ -62,6 +62,7 @@ def predict_image():
                     if len(id_str) != 14:
                         continue
                     National_ID = int(id_str)
+                    printf("gooood")
                     return (National_ID)
             else:
                 print("No contours")
@@ -85,10 +86,6 @@ def predict_image():
         # Process images
         id = OCR_pipeline(image1_array)
 
-        # Return response
-        if id is None:
-            return jsonify({"status": 200, "data": {"id": None}}), 200  # Indicate no ID found
-        else:
             return jsonify({"status": 200, "data": {"id": id}}), 200
 
     except Exception as e:
