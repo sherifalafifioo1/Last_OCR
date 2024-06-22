@@ -85,8 +85,13 @@ def predict_image():
 
         # Process images
         id = OCR_pipeline(image1_array)
-
-            return jsonify({"status": 200, "data": {"id": id}}), 200
+    return jsonify({
+                "status": 200,
+                "data": {
+                    "id": id
+                }
+            })
+           
 
     except Exception as e:
         # Handle errors during processing
