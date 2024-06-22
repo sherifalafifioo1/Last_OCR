@@ -8,7 +8,9 @@ import numpy as np
 import cv2
 import pytesseract
 
-
+def get_img_from_path(image_path):
+   
+    return image_path
 def img_to_gray(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return gray
@@ -80,9 +82,8 @@ def findOrientation(gray):
         _type_: _description_
     """
     MIN_MATCH_COUNT = 8
-    template_path = "images/sift_template.jpg"
-    img1 = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
-  # queryImage
+    template_path = "C:\\Users\\USER\\Documents\\Grad_project\\Authentication\\github_example\\ID-Card-Detection\\sift_template.jpg"
+    img1 = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)  # queryImage
     # Initiate SIFT detector
     sift = cv2.SIFT_create()
     # find the keypoints and descriptors with SIFT
@@ -317,7 +318,3 @@ def OCR_pytesseract (img):
 
    
     #print(str_ID) #30110011255366
-
-#-------------------------------------------------
-#Second part: deepface library
-
