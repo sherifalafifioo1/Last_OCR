@@ -82,7 +82,7 @@ def findOrientation(gray):
         _type_: _description_
     """
     MIN_MATCH_COUNT = 8
-    template_path = "https://www.dropbox.com/scl/fi/9cyqruqxv07hsqn3wl7ht/sift_template.jpg?rlkey=kd9xwne8labwhdmyu4631gco4&st=rifu1k6v&dl=0"
+    template_path = "sift_template.jpg"
     img1 = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)  # queryImage
     # Initiate SIFT detector
     sift = cv2.SIFT_create()
