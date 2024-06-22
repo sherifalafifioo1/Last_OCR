@@ -97,4 +97,4 @@ def predict_image():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, threaded=True)              ==> Common ways to troubleshoot your deploy: https://docs.render.com/troubleshooting-deploys
+    app.run(host='0.0.0.0', port=8000, threaded=True)       
