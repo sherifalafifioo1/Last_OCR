@@ -16,63 +16,58 @@ app = Flask(__name__)
 def predict_image():
 
 
-    def OCR_pipeline(img_path=''):
+   def OCR_pipeline(img_path=''):
+    """from ID img to ID number through applying contours and wrap prespective , cropping the image , thresholding and finally applying OCR
+
+    Args:
+        img_path(string): contains image path , defaults to ''
+        
+    Raises:
+        Exception: if ID_number are not  14 digit
+
+    Returns:
+        int: ID number
         """
-        Extracts ID number from an image using contour detection, perspective transformation,
-        cropping, thresholding, and OCR.
+    img = get_img_from_path(img_path)
+    gray = img_to_gray(img)
 
-        Args:
-            img_path (str, optional): Path to the image. Defaults to ''.
+    # Get homography between Gomhoreyet Masr template and ID
+    M, match_boundingbox = findOrientation(gray)
 
-        Returns:
-            int: Extracted ID number (if found and 14 digits), otherwise None.
+    # If matches found Apply Orientation
+    if M is not None:
+        gray, img, M = applyOrientation(gray, img, M)
 
-        Raises:
-            Exception: If the extracted ID number is not 14 digits.
-        """
+        # blur gray for smoothing the image for the edge detection
+        gray = blur_img(gray)
+        # Adaptive threshold
+        bin = adaptive_threshold(gray,11, 2)
+        # Edge detection
+        edges = canny_edge_detector(bin, 200, 600)
 
-        gray = img_to_gray(img_path)
 
-        # Get homography between Gomhoreyet Masr template and ID
-        M, match_boundingbox = findOrientation(gray)
+        # Getting largest Contour
+        contour_bbox, largest_contour = findLargestContour(edges)
+        if contour_bbox is not None:
 
-        # If matches found, apply orientation
-        if M is not None:
-            gray, img_path, M = applyOrientation(gray, img_path, M)
+            cropped_img = output_img(img, largest_contour) 
+            cropped_gray = img_to_gray(cropped_img)
+            ##output_pth = 'C:\\Users\\USER\\Documents\\Grad_project\\Authentication\\Authentication_Grad_Project\\output\\'
 
-            # Blur gray for smoothing the image for edge detection
-            gray = blur_img(gray)
-
-            # Adaptive threshold
-            bin = adaptive_threshold(gray, 11, 2)
-
-            # Edge detection
-            edges = canny_edge_detector(bin, 200, 600)
-
-            # Getting largest Contour
-            contour_bbox, largest_contour = findLargestContour(edges)
-            if contour_bbox is not None:
-
-                cropped_img = output_img(img_path, largest_contour)
-                cropped_gray = img_to_gray(cropped_img)
-
-                selections, bboxes = detect_text_regions(cropped_gray)
-                for i in selections:
-                    x, y, x2, y2 = bboxes[i]
-                    text_img = cropped_img[y:y2, x:x2]
-                    text_bin = preproccess_OCR(text_img)
-                    id_str = OCR_pytesseract(text_bin).replace(" ", "").replace("\n", "").rstrip()
-                    if len(id_str) != 14:
-                        continue
-                    National_ID = int(id_str)
-                    return National_ID
-            else:
-                print("No contours")
+            selections, bboxes = detect_text_regions(cropped_gray)
+            for i in selections:
+                x, y, x2, y2 = bboxes[i]
+                text_img = cropped_img[y:y2, x:x2]
+                text_bin = preproccess_OCR(text_img)
+                id_str = OCR_pytesseract(text_bin).replace(" ","").replace("\n","").rstrip()
+                if len(id_str) != 14:
+                    continue
+                National_ID = int(id_str)
+                return(National_ID)
         else:
-            print("No ID Card Found / No contours")
-
-        return None  # Indicate no ID found
-
+                    print("No contours")
+    else:
+                print("No ID Card Found / No contours")
     try:
         # Check if images are present and valid
         if 'image1' not in request.files or 'image2' not in request.files:
