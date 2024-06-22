@@ -22,7 +22,7 @@ def predict_image():
             img_path(string): contains image path , defaults to ''
 
         Raises:
-            Exception: if ID_number are not 14 digit
+            Exception: if ID_number are not 14 digit
 
         Returns:
             int: ID number
@@ -62,7 +62,7 @@ def predict_image():
                     if len(id_str) != 14:
                         continue
                     National_ID = int(id_str)
-                    printf("gooood")
+                    print("gooood")
                     return (National_ID)
             else:
                 print("No contours")
@@ -85,13 +85,14 @@ def predict_image():
 
         # Process images
         id = OCR_pipeline(image1_array)
-    return jsonify({
-                "status": 200,
-                "data": {
-                    "id": id
-                }
-            })
-           
+
+        # Return response
+        return jsonify({  # Fixed the missing closing curly brace
+            "status": 200,
+            "data": {
+                "id": id
+            }
+        })
 
     except Exception as e:
         # Handle errors during processing
@@ -99,4 +100,4 @@ def predict_image():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, threaded=True)       
+    app.run(host='0.0.0.0', port=8000, threaded=True)         
